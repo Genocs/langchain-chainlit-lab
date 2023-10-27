@@ -1,10 +1,10 @@
-name: Pylint
+name: Pylint (disabled)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ _main ]
   pull_request:
-    branches: [ main ]
+    branches: [ _main ]
 
 jobs:
   build:

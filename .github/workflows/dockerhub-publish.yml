@@ -1,0 +1,57 @@
+# This is a manually triggered dockerhub build and publish
+
+name: Publish to Dockerhub
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      version:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: "Image Version"
+
+        # Default value if no value is explicitly provided
+        default: "1.0.0"
+
+        # Input has to be provided for the workflow to run
+        required: true
+
+
+jobs:
+  push_to_registry:
+    name: Publish Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push image to Dockerhub
+        run: |
+          docker build -f dockerfile -t genocs/langchain-langlit:${{ github.event.inputs.version }} -t genocs/langchain-langlit:latest .
+          docker push genocs/genocs/langchain-langlit:${{ github.event.inputs.version }}
+          docker push genocs/genocs/langchain-langlit:latest
+
+
+      #- name: Extract metadata (tags, labels) for Docker
+      #  id: meta
+      #  uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      #  with:
+      #    images: genocs/langchain-langlit
+#
+      #- name: Build and push Docker image
+      #  uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+      #  with:
+      #    context: .
+      #    file: ./dockerfile
+      #    push: true
+      #    tags: ${{ steps.meta.outputs.tags }}
+      #    labels: ${{ steps.meta.outputs.labels }}
