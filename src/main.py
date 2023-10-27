@@ -1,33 +1,32 @@
 """Python file to serve as the frontend"""
 import sys
 import os
-sys.path.append(os.path.abspath('.'))
 
-from langchain import PromptTemplate, OpenAI, LLMChain
+from langchain import OpenAI
 from langchain.agents import create_csv_agent
+from chainlit import user_session
 import chainlit as cl
 
-from chainlit import user_session
+sys.path.append(os.path.abspath('.'))
 
-user_env = user_session.get("env")
-model_name = "text-davinci-003"
+# user_env = user_session.get("env")
+MODEL_NAME = "text-davinci-003"
 
-
-# os.environ["OPENAI_API_KEY"] = ""
-
-template = """Question: {question}
+TEMPLATE = """Question: {question}
 
 Answer: Let's think step by step."""
 
 @cl.langchain_factory(use_async=True)
 def factory():
+    """ The langchain factory is a function that returns a chain instance.
+    """
+
     user_env = cl.user_session.get("env")
     os.environ["OPENAI_API_KEY"] = user_env.get("OPENAI_API_KEY")
     # Instantiate the chain for that user session
-    prompt = PromptTemplate(template=template, input_variables=["question"])
+    # prompt = PromptTemplate(template=TEMPLATE, input_variables=["question"])
 
-    llm = OpenAI(temperature=0, model_name=model_name)
+    llm = OpenAI(temperature=0, model_name=MODEL_NAME)
     csv_agent = create_csv_agent(llm=llm, path='/home/appuser/app/src/titanic.csv', verbose=True)
 
-    return csv_agent 
-
+    return csv_agent

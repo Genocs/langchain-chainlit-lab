@@ -2,7 +2,7 @@
 name = "langchain-chainlit-docker-template"
 version = "0.1.0"
 description = "A template langchain Chainlit App with Docker Deployments"
-authors = ["Amjad Raza"]
+authors = ["Nocco Giovanni Emanuele"]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "langchain_chainlit_docker_deployment_template"}]
