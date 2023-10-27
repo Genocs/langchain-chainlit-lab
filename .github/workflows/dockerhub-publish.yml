@@ -37,8 +37,8 @@ jobs:
       - name: Build and push image to Dockerhub
         run: |
           docker build -f dockerfile -t genocs/langchain-langlit:${{ github.event.inputs.version }} -t genocs/langchain-langlit:latest .
-          docker push genocs/genocs/langchain-langlit:${{ github.event.inputs.version }}
-          docker push genocs/genocs/langchain-langlit:latest
+          docker push genocs/langchain-langlit:${{ github.event.inputs.version }}
+          docker push genocs/langchain-langlit:latest
 
 
       #- name: Extract metadata (tags, labels) for Docker
