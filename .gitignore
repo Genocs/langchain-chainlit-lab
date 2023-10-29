@@ -152,3 +152,9 @@ cython_debug/
 credentials.json
 token.json
 
+# Chroma data index
+.chroma
+
+# Private data
+company_description.*
+.chainlit/.langchain.db
