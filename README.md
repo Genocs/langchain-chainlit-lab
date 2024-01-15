@@ -38,6 +38,7 @@ Add `poetry` to your path.
 
 ```bash
 # To check if poetry is installed
+# Tested version of poetry installed was 1.6.1
 poetry --version
 
 # To reevaluate the dependencies run
