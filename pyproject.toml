@@ -9,16 +9,13 @@ packages = [{include = "langchain_chainlit_docker_deployment_template"}]
 
 
 [tool.poetry.dependencies]
-python = "^3.10"
-langchain = "0.1.0"
-langchain-experimental = "0.0.49"
-openai = "0.27.8"
-chainlit = "0.3.0"
-pandas = "2.1.4"
-tabulate = "0.9.0"
-chromadb = "0.4.22"
-matplotlib = "3.8.2"
-tiktoken = "0.5.2"
+python = "3.11.7"
+pyautogen = "0.2.6"
+# chainlit = "1.0.101"
+# python-decouple = "3.8"
+# tabulate = "0.9.0"
+# chromadb = "0.4.22"
+# tiktoken = "0.5.2"
 
 [build-system]
 requires = ["poetry-core"]
