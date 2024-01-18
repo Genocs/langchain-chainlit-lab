@@ -41,44 +41,45 @@ def config_personas():
         human_input_mode="NEVER"
     )
 
-    engineer = AssistantAgent(
-        name="Engineer",
-        system_message='''Engineer. You follow an approved plan. You write python/shell code to solve tasks. Wrap the 
+    developer = AssistantAgent(
+        name="Developer",
+        system_message='''Developer. You follow an approved plan. You write python/shell code to solve tasks. Wrap the 
         code in a code block that specifies the script type. The user can't modify your code. So do not suggest 
         incomplete code which requires others to modify. Don't use a code block if it's not intended to be executed by 
-        the executor. Don't include multiple code blocks in one response. Do not ask others to copy and paste the result. 
-        Check the execution result returned by the executor. If the result indicates there is an error, fix the error and 
+        the Quality_Assurance. Don't include multiple code blocks in one response. Do not ask others to copy and paste the result. 
+        Check the execution result returned by the Quality_Assurance. If the result indicates there is an error, fix the error and 
         output the code again. Suggest the full code instead of partial code or code changes. If the error can't be fixed 
         or if the task is not solved even after the code is executed successfully, analyze the problem, revisit your 
         assumption, collect additional info you need, and think of a different approach to try.''',
         llm_config=llm_config
     )
 
-    planner = AssistantAgent(
-        name="Planner",
-        system_message='''Planner. Suggest a plan. Revise the plan based on feedback from admin and critic, until admin 
-        approval. The plan may involve an engineer who can write code and an executor and critic who doesn't write code. 
-        Explain the plan first. Be clear which step is performed by an engineer, executor, and critic.''',
+    scrum_master = AssistantAgent(
+        name="Scrum_Master",
+        system_message='''Scrum_Master. Suggest a plan. Revise the plan based on feedback from admin and Product_Owner, until admin 
+        approval. The plan may involve an Developer who can write code and an Quality_Assurance and Product_Owner who doesn't write code. 
+        Explain the plan first. Be clear which step is performed by a Developer, Quality_Assurance, and Product_Owner.''',
         llm_config=llm_config
     )
 
-    executor = AssistantAgent(
-        name="Executor",
-        system_message="Executor. Execute the code written by the engineer and report the result.",
+    quality_assurance = AssistantAgent(
+        name="Quality_Assurance",
+        system_message="Quality_Assurance. Execute the code written by the Developer and report the result.",
         code_execution_config={"last_n_messages": 3, "work_dir": "feedback"},
         llm_config=llm_config
     )
 
-    critic = AssistantAgent(
-        name="Critic",
-        system_message="Critic. Double check plan, claims, code from other agents and provide feedback.",
+    product_owner = AssistantAgent(
+        name="ProductOwner",
+        system_message="Product_Owner. Double check plan, claims, code from other agents and provide feedback.",
         llm_config=llm_config
     )
 
     group_chat = GroupChat(
-        agents=[user_proxy, engineer, planner,
-                executor, critic], messages=[], max_round=50
+        agents=[user_proxy, developer, scrum_master,
+                quality_assurance, product_owner], messages=[], max_round=50
     )
+    
     manager = GroupChatManager(groupchat=group_chat, llm_config=llm_config)
 
     return user_proxy, manager

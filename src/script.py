@@ -17,7 +17,7 @@ def chat_new_message(self, message, sender):
             author=sender.name,
         ).send()
     )
-    
+
 
 def config_personas():
     config_list = [{
@@ -41,31 +41,30 @@ def config_personas():
 
     content_creator = AssistantAgent(
         name="Content_Creator",
-        system_message="I am a content creator that talks about exciting technologies about AI. "
-                       "I want to create exciting content for my audience that is about the latest AI technology. "
-                       "I want to provide in-depth details of the latest AI white papers.",
+        system_message='''I am a content creator that talks about latest technologies realted to Biotechnology. 
+        I want to create exciting content for my audience that is about the latest Biotechnology technology. 
+        I want to provide in-depth details of the latest Biotechnology white papers.''',
         llm_config=llm_config
     )
 
     script_writer = AssistantAgent(
         name="Script_Writer",
-        system_message="I am a script writer for the Content Creator. "
-                       "This should be an eloquently written script so the Content Creator can "
-                       "talk to the audience about AI.",
+        system_message='''I am a script writer for the Content Creator.  This should be an eloquently written 
+        script so the Content Creator can talk to the audience about Biotechnology.''',
         llm_config=llm_config
     )
 
     researcher = AssistantAgent(
         name="Researcher",
-        system_message="I am the researcher for the Content Creator and look up the latest white papers in AI."
-                       " Make sure to include the white paper Title and Year it was introduced to the Script_Writer.",
+        system_message='''I am the researcher for the Content Creator and look up the latest white papers in Biotechnology. 
+        Make sure to include the white paper Title and Year it was introduced to the Script_Writer.''',
         llm_config=llm_config
     )
 
     reviewer = AssistantAgent(
         name="Reviewer",
-        system_message="I am the reviewer for the Content Creator, Script Writer, and Researcher once they are done "
-                       "and have come up with a script. I will double check the script and provide feedback.",
+        system_message='''I am the reviewer for the Content_Creator, Script_Writer, and Researcher once they are done 
+        and have come up with a script. I will double check the script and provide feedback.''',
         llm_config=llm_config
     )
 
@@ -73,6 +72,7 @@ def config_personas():
         agents=[user_proxy, content_creator, script_writer,
                 researcher, reviewer], messages=[]
     )
+    
     manager = GroupChatManager(groupchat=group_chat, llm_config=llm_config)
 
     return user_proxy, manager

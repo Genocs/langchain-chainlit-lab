@@ -13,7 +13,7 @@ async def set_chat_profile():
             markdown_description="Your next YouTube video script is just a few messages away!",
         ),
         cl.ChatProfile(
-            name="SaaS Product Ideation",
+            name="Awesome Startup",
             markdown_description="Get your next SaaS product idea in a few messages!",
         ),
         cl.ChatProfile(
@@ -37,7 +37,7 @@ async def on_message(message):
     message_content = message.content
     if chat_profile == "YouTube Scriptwriting":
         start_chat_script(message_content)
-    elif chat_profile == "SaaS Product Ideation":
+    elif chat_profile == "Awesome Startup":
         start_chat_saas(message_content)
     elif chat_profile == "Genocs Developer":
         start_chat_genocs_dev(message_content)
