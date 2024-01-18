@@ -3,6 +3,7 @@ import chainlit as cl
 from saas import start_chat_saas
 from script import start_chat_script
 from genocs_dev import start_chat_genocs_dev
+from script_ita import start_chat_script_ita
 
 
 @cl.set_chat_profiles
@@ -19,6 +20,10 @@ async def set_chat_profile():
         cl.ChatProfile(
             name="Genocs Developer",
             markdown_description="Build your awesome product by means of Genocs .NET library!",
+        ),
+        cl.ChatProfile(
+            name="Creatore Contenuti Italiano",
+            markdown_description="Creatore di contenuti in italiano",
         ),
     ]
 
@@ -41,3 +46,5 @@ async def on_message(message):
         start_chat_saas(message_content)
     elif chat_profile == "Genocs Developer":
         start_chat_genocs_dev(message_content)
+    elif chat_profile == "Creatore Contenuti Italiano":
+        start_chat_script_ita(message_content)
